@@ -24,7 +24,10 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t saicharan492/devops-integration .'
+                   sh '''
+                    export PATH=$PATH:/usr/local/bin
+                    docker build -t saicharan492/devops-integration .
+                '''
                 }
             }
         }
