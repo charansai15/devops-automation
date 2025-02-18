@@ -35,9 +35,11 @@ pipeline {
             steps{
                 script{
                   withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
-                   sh 'docker login -u saicharan492 -p ${dockerhubpwd}'
-}
-                   sh 'docker push saicharan492/devops-integration'
+                  sh '''
+                        export PATH=$PATH:/usr/local/bin
+                        docker login -u saicharan492 -p $DOCKER_HUB_PASSWORD
+                        docker push saicharan492/devops-integration
+                    '''
                 }
             }
         }
