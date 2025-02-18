@@ -31,19 +31,19 @@ pipeline {
                 }
             }
         }
-        stage('Push image to Hub'){
-            steps{
-                script{
-                  withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
-                  sh '''
-                        export PATH=$PATH:/usr/local/bin
-                        docker login -u saicharan492 -p $DOCKER_HUB_PASSWORD
-                        docker push saicharan492/devops-integration
-                    '''
-                }
+       stage('Push image to Hub') {
+    steps {
+        script {
+            withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
+                sh '''
+                    export PATH=$PATH:/usr/local/bin
+                    docker login -u saicharan492 -p "$dockerhubpwd"
+                    docker push saicharan492/devops-integration
+                '''
             }
         }
-        
     }
+}
+
 }
 }
