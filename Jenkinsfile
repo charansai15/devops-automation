@@ -11,10 +11,11 @@ pipeline {
             }
         }
         stage('Verify Docker') {
-            steps {
-                sh 'which docker && docker --version'
-            }
-        }
+    steps {
+        sh 'export PATH=$PATH:/usr/local/bin && which docker && docker --version'
+    }
+}
+
         stage('Build docker image'){
             steps{
                 script{
