@@ -13,6 +13,7 @@ pipeline {
         stage('Check Docker') {
             steps {
                 sh '''
+                    export PATH=$PATH:/usr/local/bin
                     echo "PATH is: $PATH"
                     which docker
                     docker --version
