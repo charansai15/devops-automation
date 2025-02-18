@@ -10,11 +10,15 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
-        stage('Verify Docker') {
-    steps {
-        sh 'export PATH=$PATH:/usr/local/bin && which docker && docker --version'
-    }
-}
+        stage('Check Docker') {
+            steps {
+                sh '''
+                    echo "PATH is: $PATH"
+                    which docker
+                    docker --version
+                '''
+            }
+        }
 
         stage('Build docker image'){
             steps{
