@@ -10,13 +10,11 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
-        stages {
         stage('Verify Docker') {
             steps {
                 sh 'which docker && docker --version'
             }
         }
-    }
         stage('Build docker image'){
             steps{
                 script{
