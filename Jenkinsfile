@@ -1,5 +1,12 @@
 pipeline {
     agent any
+
+    environment {
+        registryName = "saicharan492"
+        registryUrl = "saicharan492.azurecr.io"
+        registryCredential = "ACR"
+        dockeImage = ''
+    }
     tools{
         maven 'maven_3_5_0'
     }
@@ -44,6 +51,14 @@ pipeline {
         }
     }
 }
-
+    stage('Push image to ACR') {
+    steps {
+        script {
+            docker.withRegistry("http://${registryurl}", registryCredential){
+                dockerImage.push()
+            }
+        }
+    }
+}
 }
 }
