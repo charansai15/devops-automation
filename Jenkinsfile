@@ -58,16 +58,19 @@ pipeline {
         }
 
         stage('Push Image to ACR') {
-            steps {
-                script {
-                    withDockerRegistry([url: "https://${registryUrl}", credentialsId: registryCredential]) {
-                        sh '''
-                            export PATH=$PATH:/usr/local/bin
-                            docker push ${registryUrl}/${imageName}:${imageTag}
-                        '''
-                    }
-                }
+    steps {
+        script {
+            withCredentials([usernamePassword(credentialsId: registryCredential, usernameVariable: 'ACR_USERNAME', passwordVariable: 'ACR_PASSWORD')]) {
+                sh '''
+                    export PATH=$PATH:/usr/local/bin
+                    echo "Logging in to ACR..."
+                    echo "$ACR_PASSWORD" | docker login ${registryUrl} -u $ACR_USERNAME --password-stdin
+                    docker push ${registryUrl}/devops-integration:latest
+                '''
             }
         }
+    }
+}
+
     }
 }
